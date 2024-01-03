@@ -168,3 +168,82 @@ echo $myvar
 #+RESULTS:
 | Wed   | Jan |      3 | 03:16:41 | IST | 2024 |
 | Happy | New | Year |          |     |        |
+
+
+*** Exporting a Shell Variable
+
++ When working with shell scripting, exporting variables is essential for making them available to subshells.
++ By default variable is not available for child shell.
+
+#+begin_src bash
+myvar="System Commands"
+bash #Opening a child shell
+echo $myvar
+~
+#+end_src
+
+*You can use the ~export~ command to make a variable available to subshells:*
+
+#+begin_src bash
+export myvar="System Commands"
+bash
+echo $myvar
+~ System Commands
+
+#+end_src
+
+
+*** Removing a Variable
+
++ *Delete the variable.*
+
+  #+begin_src bash
+unset myvar
+echo $myvar
+~
+  #+end_src
+
++ *Set the variable value to ~null~.*
+
+  #+begin_src bash
+myvar=
+echo $myvar
+~
+
+  #+end_src
+
+*** Test if a Variable is Set or Not Set
+
++ *Using -v Option to Test if a Variable is Set:*
+
+    ~0~: Success (variable myvar is set)
+    ~1~: Failure (variable myvar is not set)
+
+    #+begin_src bash
+unset myvar
+[[ -v myvar ]]
+echo "Is myvar set? Exit code: $?"
+~ Is myvat set? Exit code: 1
+
+myvar=10
+[[ -v myvar ]]
+echo "Is myvar set? Exit code: $?"
+~ Is myvar set? Exit code: 0
+
+#+end_src
+
++ *Using -z Option to Test if a Variable is Not Set:*
+
+    ~0~: Success (If the length of the string ${myvar} is zero, i.e., variable is not set)
+    ~1~: Failure (If the length of the string ${myvar} is not zero, i.e., variable is set)
+
+    #+begin_src bash
+unset myvar
+[[ -z ${myvar} ]]
+echo "Is myvar not set? Exit code: $?"
+~ Is myvar not set? Exit code: 1
+myvar=10
+[[ -z ${myvar} ]]
+echo "Is myvar not set? Exit code: $?"
+~ Is myvar not set? Exit code: 0
+    #+end_src
