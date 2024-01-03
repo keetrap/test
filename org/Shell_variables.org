@@ -182,14 +182,13 @@ echo $myvar
 ~
 #+end_src
 
-*You can use the ~export~ command to make a variable available to subshells:*
+*You can use the export command to make a variable available to subshells:*
 
 #+begin_src bash
 export myvar="System Commands"
 bash
 echo $myvar
 ~ System Commands
-
 #+end_src
 
 
@@ -201,16 +200,15 @@ echo $myvar
 unset myvar
 echo $myvar
 ~
-  #+end_src
+#+end_src
 
-+ *Set the variable value to ~null~.*
++ *Set the variable value to null.*
 
   #+begin_src bash
 myvar=
 echo $myvar
 ~
-
-  #+end_src
+#+end_src
 
 *** Test if a Variable is Set or Not Set
 
@@ -229,7 +227,6 @@ myvar=10
 [[ -v myvar ]]
 echo "Is myvar set? Exit code: $?"
 ~ Is myvar set? Exit code: 0
-
 #+end_src
 
 + *Using -z Option to Test if a Variable is Not Set:*
@@ -246,4 +243,4 @@ myvar=10
 [[ -z ${myvar} ]]
 echo "Is myvar not set? Exit code: $?"
 ~ Is myvar not set? Exit code: 0
-    #+end_src
+#+end_src
