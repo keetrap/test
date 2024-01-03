@@ -215,6 +215,7 @@ echo $myvar
 + *Using -v Option to Test if a Variable is Set:*
 
     ~0~: Success (variable myvar is set)
+
     ~1~: Failure (variable myvar is not set)
 
     #+begin_src bash
@@ -232,6 +233,7 @@ echo "Is myvar set? Exit code: $?"
 + *Using -z Option to Test if a Variable is Not Set:*
 
     ~0~: Success (If the length of the string ${myvar} is zero, i.e., variable is not set)
+
     ~1~: Failure (If the length of the string ${myvar} is not zero, i.e., variable is set)
 
     #+begin_src bash
