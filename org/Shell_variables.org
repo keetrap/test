@@ -256,10 +256,9 @@ echo ${myvar}
 ~ default_value
    #+end_src
 
-
 3. *Reset the Value if the Variable is already Set:*
     If the variable ~myvar~ is set ~:+~, use  ~temp_value~ as it's temporary value.
-    ,#+begin_src bash
+#+begin_src bash
 myvar=Shell
 echo ${myavr:+"temp_value"}
 ~ temp_value
