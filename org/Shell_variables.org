@@ -244,3 +244,63 @@ myvar=10
 echo "Is myvar not set? Exit code: $?"
 ~ Is myvar not set? Exit code: 0
 #+end_src
+
+*** Setting Default Values for a Shell Variable
+
+In shell scripting, you can set default values for variables, substitute default values if variables are not set, and reset variables if their values are set.
+
+1. *Substitue Default Value for a Variable:*
+   If the variable ~myvar~ is not set ~:-~, use ~temp_value~ as temporary value.
+    #+begin_src bash
+myvar=       #Here vaule of the variable myvar is not set
+echo ${myvar:-"temp_value"}
+~ default_value
+
+myvar=Shell      #At this point value of myvar is Shell
+echo ${myvar:-"temp_value"}
+~ Shell
+#+end_src
+
+2. *Set Default Value:*
+   If the variable ~myvar~ is not set ~:=~, use ~default_value~ as it's value.
+   #+begin_src bash
+myvar=     # Here value of the variable myvar is not set
+echo ${myvar:="default_value"}
+~ default_value  # At this point value of the variable myvar is set to default_value.
+echo ${myvar:="Shell"} # This command will not work because value of the variable already set in previous command and this will print the default_value
+~ default_value
+echo ${myvar}
+~ default_value
+`if:
+        do this
+else
+        do not do this
+    return`
+   #+end_src
+
+3. *Reset the Value if the Variable is already Set:*
+    If the variable ~myvar~ is set ~:+~, use  ~temp_value~ as it's temporary value.
+    #+begin_src bash
+myvar=Shell
+echo ${myavr:+"temp_value"}
+~ temp_value
+echo $myvar
+~ Shell
+    #+end_src
+
+*** User Defined Alert
+ Display a user defined alert, if the value of the variable is not set.
+ #+begin_src bash
+echo ${myvar:?"myvar is not set"}
+bash: myvar: myvar is not set
+ #+end_src
+
+
+*** Indirect Variable Referencing in Bash
+
+In Bash, you can use the ~${!pattern*}~ syntax for indirect variable referencing, where ~pattern*~ matches variable names.
+
+#+begin_src bash
+echo ${!B*}
+~ BASH BASHOPTS BASHPID BASH_ALIASES BASH_ARGC BASH_ARGV BASH_ARGV0 BASH_CMDS BASH_COMMAND BASH_LINENO BASH_SOURCE BASH_SUBSHELL BASH_VERSINFO BASH_VERSION
+#+end_src
