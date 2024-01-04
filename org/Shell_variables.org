@@ -12,78 +12,63 @@
   - *Example:*
     #+begin_src bash
 echo $USER
+~ Se2001
 #+end_src
-
-#+RESULTS:
-: keetrap
 
 - *$LOGNAME:*
   - *Description:* Holds the login name of the current user.
   - *Example:*
     #+begin_src bash
 echo "Login name:" $LOGNAME
+~ Login name: Se2001
     #+end_src
-
-    #+RESULTS:
-    : Login name: keetrap
 
 - *$HOME:*
   - *Description:* Represents the home directory of the current user.
   - *Example:*
     #+begin_src bash
 echo "Home directory:" $HOME
+~ Home directory: /home/se2001
     #+end_src
-
-    #+RESULTS:
-    : Home directory: /home/keetrap
 
 - *$UID:*
   - *Description:* Contains the numeric user ID of the current user.
   - *Example:*
     #+begin_src bash
 echo "User ID:" $UID
+~ User ID: 1000
     #+end_src
-
-    #+RESULTS:
-    : User ID: 1000
 
 - *$SHELL:*
   - *Description:* Represents the user's default shell.
   - *Example:*
     #+begin_src bash
 echo "Default shell: $SHELL"
+~ Default shell: /bin/bash
     #+end_src
-
-    #+RESULTS:
-    : Default shell: /bin/bash
 
 - *$PATH:*
   - *Description:* Specifies the directories to search for executable files. It often includes the user's bin directory.
   - *Example:*
     #+begin_src bash
 echo "Path: $PATH"
-    #+end_src
+~ Path: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl
+#+end_src
 
-    #+RESULTS:
-    : Path: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/windows/system32:/mnt/c/windows:/mnt/c/windows/System32/Wbem:/mnt/c/windows/System32/WindowsPowerShell/v1.0/:/mnt/c/windows/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/Users/parte/AppData/Local/Microsoft/WindowsApps:/mnt/d/fd-v9.0.0-x86_64-pc-windows-gnu:/mnt/d/ripgrep-14.0.3-x86_64-pc-windows-gnu:/mnt/d/Emacs/emacs-29.1/bin
 
 - *$PWD:*
   - *Description:* Represents the current working directory.
     #+begin_src bash
 echo "Current working directory: $PWD"
-    #+end_src
-
-    #+RESULTS:
-    : Current working directory: /mnt/c/Users/parte/Desktop/se2001-notes
+~ Current Woring direcory: /se2001-notes
+#+end_src
 
 - *$TERM:*
   - *Description:* Specifies the terminal type being used.
     #+begin_src bash
 echo "Terminal type: $TERM"
+~ Terminal type: xterm-256color
 #+end_src
-
-#+RESULTS:
-: Terminal type: xterm-256color
 
 ** Special Shell variables
 
@@ -165,9 +150,6 @@ echo $myvar
 ~ Happy New Year
 #+end_src
 
-#+RESULTS:
-| Wed   | Jan |      3 | 03:16:41 | IST | 2024 |
-| Happy | New | Year |          |     |        |
 
 
 *** Exporting a Shell Variable
@@ -271,16 +253,16 @@ echo ${myvar:="Shell"} # This command will not work because value of the variabl
 ~ default_value
 echo ${myvar}
 ~ default_value
-`if:
-        do this
-else
-        do not do this
-    return`
    #+end_src
+
+   ,#+RESULTS:
+   | default_value |
+   | default_value |
+   | default_value |
 
 3. *Reset the Value if the Variable is already Set:*
     If the variable ~myvar~ is set ~:+~, use  ~temp_value~ as it's temporary value.
-    #+begin_src bash
+    ,#+begin_src bash
 myvar=Shell
 echo ${myavr:+"temp_value"}
 ~ temp_value
