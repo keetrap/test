@@ -21,7 +21,7 @@ echo $USER
     #+begin_src bash
 echo "Login name:" $LOGNAME
 ~ Login name: Se2001
-    #+end_src
+#+end_src
 
 - *$HOME:*
   - *Description:* Represents the home directory of the current user.
@@ -29,7 +29,7 @@ echo "Login name:" $LOGNAME
     #+begin_src bash
 echo "Home directory:" $HOME
 ~ Home directory: /home/se2001
-    #+end_src
+#+end_src
 
 - *$UID:*
   - *Description:* Contains the numeric user ID of the current user.
@@ -37,7 +37,7 @@ echo "Home directory:" $HOME
     #+begin_src bash
 echo "User ID:" $UID
 ~ User ID: 1000
-    #+end_src
+#+end_src
 
 - *$SHELL:*
   - *Description:* Represents the user's default shell.
@@ -45,7 +45,7 @@ echo "User ID:" $UID
     #+begin_src bash
 echo "Default shell: $SHELL"
 ~ Default shell: /bin/bash
-    #+end_src
+#+end_src
 
 - *$PATH:*
   - *Description:* Specifies the directories to search for executable files. It often includes the user's bin directory.
@@ -234,11 +234,11 @@ In shell scripting, you can set default values for variables, substitute default
 1. *Substitue Default Value for a Variable:*
    If the variable ~myvar~ is not set ~:-~, use ~temp_value~ as temporary value.
     #+begin_src bash
-myvar=       #Here vaule of the variable myvar is not set
+myvar=       # Here vaule of the variable myvar is not set
 echo ${myvar:-"temp_value"}
 ~ default_value
 
-myvar=Shell      #At this point value of myvar is Shell
+myvar=Shell      # At this point value of myvar is Shell
 echo ${myvar:-"temp_value"}
 ~ Shell
 #+end_src
@@ -249,16 +249,13 @@ echo ${myvar:-"temp_value"}
 myvar=     # Here value of the variable myvar is not set
 echo ${myvar:="default_value"}
 ~ default_value  # At this point value of the variable myvar is set to default_value.
-echo ${myvar:="Shell"} # This command will not work because value of the variable already set in previous command and this will print the default_value
+echo ${myvar:="Shell"} # This command will not work because value of the variable
+                       # already set in previous command and this will print the default_value
 ~ default_value
 echo ${myvar}
 ~ default_value
    #+end_src
 
-   ,#+RESULTS:
-   | default_value |
-   | default_value |
-   | default_value |
 
 3. *Reset the Value if the Variable is already Set:*
     If the variable ~myvar~ is set ~:+~, use  ~temp_value~ as it's temporary value.
