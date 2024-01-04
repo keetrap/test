@@ -250,21 +250,21 @@ myvar=     # Here value of the variable myvar is not set
 echo ${myvar:="default_value"}
 ~ default_value  # At this point value of the variable myvar is set to default_value.
 echo ${myvar:="Shell"} # This command will not work because value of the variable
-                       # already set in previous command and this will print the default_value
+# already set in previous command and this will print the default_value
 ~ default_value
 echo ${myvar}
 ~ default_value
-   #+end_src
+#+end_src
 
 3. *Reset the Value if the Variable is already Set:*
     If the variable ~myvar~ is set ~:+~, use  ~temp_value~ as it's temporary value.
-#+begin_src bash
+    #+begin_src bash
 myvar=Shell
 echo ${myavr:+"temp_value"}
 ~ temp_value
 echo $myvar
 ~ Shell
-    #+end_src
+#+end_src
 
 *** User Defined Alert
  Display a user defined alert, if the value of the variable is not set.
