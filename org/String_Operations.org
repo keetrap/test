@@ -1,0 +1,56 @@
+#+title: String Operations
+
+** 1. Concatenation:
+Concatenates two strings (string1 and string2) with a space in between, and then prints the result.
+#+begin_src bash
+string1=System
+string2=Commands
+result="$string1 $string2"
+echo $result
+~ System Commands
+#+end_src
+
+** 2. Substring:
++ Extracts a substring from the variable ~original~ using offset from the begin. ~${varname:offset:slice_length}~ It starts at position 5 and takes 2 characters, resulting in the substring ~Is~.
+#+begin_src bash
+original=ThisIsAString
+substring=${original:4:2}
+echo $substring
+~ Is
+#+end_src
+
+
++ Extract part of string by using offset from the end.
+  Notice <space> between operator : and - sign.
+
+#+begin_src bash
+original=ThisIsAString
+substring=${original: -10:2}
+echo $substring
+~ Is
+#+end_src
+
+
+** 3. Length of a String:
+Calculates and prints the length of the string in the variable ~mystring~.
+#+begin_src bash
+mystring=BasH
+echo ${#mystring}
+~4
+#+end_src
+
+
+** 4. Uppercase/Lowercase Conversion:
+
+#+begin_src bash
+Var=hello
+echo ${Var^} # This command converts first character to UPPER case.
+~ Hello
+echo ${Var^^} # This command converts all string to UPPER case.
+~ HELLO
+Var=WORLD
+echo ${Var,} # This command converts first character to lower case.
+~ wORLD
+echo ${Var,,} # This command converts all string to lower case.
+~ world
+#+end_src
