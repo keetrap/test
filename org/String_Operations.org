@@ -36,7 +36,7 @@ Calculates and prints the length of the string in the variable ~mystring~.
 #+begin_src bash
 mystring=BasH
 echo ${#mystring}
-~4
+~ 4
 #+end_src
 
 
@@ -53,4 +53,74 @@ echo ${Var,} # This command converts first character to lower case.
 ~ wORLD
 echo ${Var,,} # This command converts all string to lower case.
 ~ world
+#+end_src
+
+** 5. Replace Substring:
+#+begin_src bash
+original="Hello Hello"
+echo ${original/Hello/Hi} # This will replace the first occurance of Hello with Hi
+~ Hi Hello
+original="one one two two two three"
+newstring="${original//two/replaced}" # This will replace all the occurances of two with replaced
+echo $newstring
+~ one one replaced replaced replaced three
+#+end_src
+
+*** Replace Substring by Location:
++ Match and replace the prefix, you can use ~/#~
++ Match and replace the suffix, you can use ~/%~
+#+begin_src bash
+myvar=MyFile.tar.My
+echo ${myvar/#My/Your}
+~ Your.tar.My
+echo ${myvar/%My/Your}
+~ Myfile.tar.Your
+
+#+end_src                                       |
+
+** 6. Removing Prefix/Suffix:
+
++ To remove a prefix from a string, you can use the ~${parameter#word}~ syntax. This removes the shortest match of word from the beginning of the value of parameter.
++ To remove a suffix from a string, you can use the ~${parameter%word}~ syntax. This removes the shortest match of word from the end of the value of parameter.
+
+#+begin_src bash
+original="PrefixHello"
+echo ${original#Prefix}
+~ Hello
+original="HelloSuffix"
+echo ${original%Suffix}
+~ Hello
+
+myvar=MyFile.tar.gz
+echo ${myvar#*.} # * will match any number of characters
+~ tar.gz
+echo ${myvar#*.*.}
+~ gz
+
+echo ${myvar%.*}
+~ MyFile.tar
+echo ${myvar%.*.*}
+~ MyFile
+#+end_src
+
+*** Removing Longest Match:
+If you want to remove the longest match instead of the shortest match, you can use ~##~ for prefix removal and ~%%~ for suffix removal.
+
+#+begin_src bash
+original="PrefixPrefixHelloSuffixSuffix"
+echo ${original##*Prefix}
+echo ${original%%Suffix*}
+
+myvar=MyFile.tar.gz
+echo ${myvar##*.}
+~ gz
+
+echo ${myvar%%.*}
+~ MyFile
+
+echo ${myvar%%.*}.${myvar##*.}
+~ MyFile.gz
+
+echo ${myvar%%.*}.zip
+~ MyFile.zip
 #+end_src
