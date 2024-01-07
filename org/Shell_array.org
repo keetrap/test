@@ -10,7 +10,6 @@ In this method, you assign a value to a specific index of the array variable. Th
 #+begin_src bash
 ARRAYNAME[INDEXNR]=value
 #+end_src
-
 This command assigns the value 'value' to the array ARRAYNAME at the index INDEXNR.
 
 *** Explicit Declaration
@@ -32,22 +31,110 @@ To display array elements, you have several options. Here is a script explaining
 #+begin_src bash
 arr=("Jayesh" "Shivang" "1" "Vipul" "Nishant" "2")
 # To print all elements of the array
-echo "All elements of the array:"
 echo "${arr[@]}"
 echo "${arr[*]}"
+~ Jayesh Shivang 1 Vipul Nishant 2
+
 # To print the first element
-echo "The first element:"
 echo "${arr[0]}"
+~ Jayesh
+
 # To print a selected index element
 selected_index=3
-echo "Selected index element at index $selected_index:"
 echo "${arr[$selected_index]}"
+~ Shivang
+
 # To print elements from a particular index
-echo "Elements from a particular index:"
 echo "${arr[@]:2}" # Prints elements starting from index 2
 echo "${arr[*]:2}" # Prints elements starting from index 2
+~ 1 Vipul Nishant 2
+
 # To print elements in a range
-echo "Elements in a range:"
 echo "${arr[@]:1:3}" # Prints elements from index 1 to 3
 echo "${arr[*]:1:3}" # Prints elements from index 1 to 3
+~ Shivang 1 Vipul
 #+end_src
+
+
+** Array Length
+Get the length of the array:
+#+BEGIN_SRC bash
+length=${#fruits[@]}
+echo "Length of array: $length"
+#+END_SRC
+
+** Iterating Over Array Elements
+#+BEGIN_SRC bash
+for fruit in "${fruits[@]}"; do
+    echo $fruit
+done
+#+END_SRC
+
+** Intermediate Shell Array Operations
+*** Adding Elements to an Array
+Use the += operator to add elements:
+#+BEGIN_SRC bash
+fruits+=("Grapes" "Pineapple")
+#+END_SRC
+
+*** Removing Elements from an Array
+Use unset to remove an element:
+#+BEGIN_SRC bash
+unset fruits[1]  # Removes the second element (Orange)
+#+END_SRC
+
+*** Slicing Arrays
+Extract a portion of the array:
+#+BEGIN_SRC bash
+slice=("${fruits[@]:1:2}")  # Elements from index 1 to 2 (Orange, Banana)
+#+END_SRC
+
+
+
+* Associative Arrays in Bash
+Associative arrays are a type of array that uses keys instead of numerical indexes. Here's how to work with them:
+
+** Declaring an Associative Array
+You can declare an associative array using the `declare` command with the ~-A~
+#+BEGIN_SRC bash
+declare -A my_array
+#+END_SRC
+
+** Adding Elements to an Associative Array
+You can add elements to an associative array one by one.
+#+BEGIN_SRC bash
+my_array["key1"]="value1"
+my_array["key2"]="value2"
+my_array["key3"]="value3"
+#+END_SRC
+
+** Accessing Elements in an Associative Array
+You can access the value of a specific key like this:
+#+BEGIN_SRC bash
+echo ${my_array["key1"]}
+~ value1
+#+END_SRC
+** Iterating Over an Associative Array
+You can iterate over an associative array using a ~for~
+#+BEGIN_SRC bash
+for key in "${!my_array[@]}"; do
+    echo "Key: $key"
+    echo "Value: ${my_array[$key]}"
+done
+#+END_SRC
+
+** Removing Elements from an Associative Array
+You can remove an element from an associative array using the ~unset~ command.
+#+BEGIN_SRC bash
+unset my_array["key1"]
+#+END_SRC
+
+** Checking if a Key Exists
+You can check if a key exists in an associative array.
+#+BEGIN_SRC bash
+if [[ -v my_array["key1"] ]]; then
+    echo "Key exists"
+else
+    echo "Key does not exist"
+fi
+#+END_SRC
