@@ -1,6 +1,5 @@
 #+title: Shell Array
 
-* Shell Arrays
 Shell arrays are a structured arrangement of similar data elements. In shell scripting, an array is a variable that holds multiple values, whether they are of the same type or different types.
 
 ** Declaration
