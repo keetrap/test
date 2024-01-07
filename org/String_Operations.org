@@ -124,3 +124,12 @@ echo ${myvar%%.*}.${myvar##*.}
 echo ${myvar%%.*}.zip
 ~ MyFile.zip
 #+end_src
+
+** 7. Split string into an array:
+#+begin_src bash
+comma_separated="apple,orange,banana"
+IFS=',' read -ra fruits <<< "$comma_separated"
+echo "First fruit: ${fruits[0]}"
+echo "Second fruit: ${fruits[1]}"
+echo "Third fruit: ${fruits[2]}"
+#+end_src

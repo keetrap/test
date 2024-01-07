@@ -1,0 +1,54 @@
+#+title: Shell Array
+
+* Shell Arrays
+Shell arrays are a structured arrangement of similar data elements. In shell scripting, an array is a variable that holds multiple values, whether they are of the same type or different types.
+
+** Declaration
+Shell arrays can be declared in various ways:
+
+*** Indirect Declaration
+In this method, you assign a value to a specific index of the array variable. There's no need to declare the array beforehand.
+#+begin_src bash
+ARRAYNAME[INDEXNR]=value
+#+end_src
+
+This command assigns the value 'value' to the array ARRAYNAME at the index INDEXNR.
+
+*** Explicit Declaration
+With explicit declaration, you first declare the array and then assign values to it.
+#+begin_src bash
+declare -a ARRAYNAME
+#+end_src
+This command declares an array named ARRAYNAME. You can then assign values to it using the indirect declaration method.
+
+*** Compound Assignment
+This method involves declaring the array along with its initial set of values. You can later add additional values to the array.
+#+begin_src bash
+ARRAYNAME=(value1 value2 .... valueN)
+#+end_src
+This command declares an array named ARRAYNAME and assigns the values 'value1', 'value2', ..., 'valueN' to it.
+
+** Accessing Array Elements
+To display array elements, you have several options. Here is a script explaining multiple options.
+#+begin_src bash
+arr=("Jayesh" "Shivang" "1" "Vipul" "Nishant" "2")
+# To print all elements of the array
+echo "All elements of the array:"
+echo "${arr[@]}"
+echo "${arr[*]}"
+# To print the first element
+echo "The first element:"
+echo "${arr[0]}"
+# To print a selected index element
+selected_index=3
+echo "Selected index element at index $selected_index:"
+echo "${arr[$selected_index]}"
+# To print elements from a particular index
+echo "Elements from a particular index:"
+echo "${arr[@]:2}" # Prints elements starting from index 2
+echo "${arr[*]:2}" # Prints elements starting from index 2
+# To print elements in a range
+echo "Elements in a range:"
+echo "${arr[@]:1:3}" # Prints elements from index 1 to 3
+echo "${arr[*]:1:3}" # Prints elements from index 1 to 3
+#+end_src
