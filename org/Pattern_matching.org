@@ -1,0 +1,88 @@
+#+title: Pattern Matching
+
+* RegEx
+- RegEx is a pattern matching template to filter text.
+- BRE: POSIX Basic Regular Expression engine
+- ERE: POSIX Extended Regular Expression engine
+
+** Special Characters (BRE and ERE)
+
+| Character(s) | Description |
+| ~.~         | Any single character except null or newline |
+| ~*~          | Zero or more of *preceding* character/expression   |
+| ~[]~       | Any of the enclosed characters/class, hyphen ~-~ indicates character range                              |
+| ~^~          | Anchor for beginning of line or *negation* of enclosed characters when used as ~[^]~   |
+| ~$~          | Anchor for end of line |
+| ~\~          | Escape special characters |
+
+
+** Special Characters (BRE)
+
+| Character(s) | Description |
+| ~\{n,m\}~    | Range of occurrences of preceding pattern at least ~n~ and utmost ~m~ times     |
+| ~(\)~      | Grouping of regular expressions |
+
+** Special Characters (ERE)
+
+| Character(s) | Description                                                                   |
+| ~{n,m}~      | Range of occurrences of preceding pattern at least ~n~ and utmost ~m~ times     |
+| ~()~         | Grouping of regular expressions                                                |
+| ~+~          | One of more of preceding character/expression                                 |
+| ~?~          | Zero of one of preceding character/expression                                 |
+| ~|~                  | Logical OR over the patterns                                                  |
+
+
+** Character Classes
+- Character classes follow specific structure, ~[:class-name:]~
+- The classes should be used within character enclosure braces as ~[character-class]~
+
+| Class            | Represents       |
+| :--------------: | :--------------- |
+| ~[[:print:]]~    | Printable        |
+| ~[[:alnum:]]~    | Alphanumeric     |
+| ~[[:alpha:]]~    | Alphabetic       |
+| ~[[:lower:]]~    | Lower case       |
+| ~[[:upper:]]~    | Upper case       |
+| ~[[:digit:]]~    | Decimal digits   |
+| ~[[:blank:]]~    | Space/Tab        |
+| ~[[:space:]]~    | Whitespace       |
+| ~[[:punct:]]~    | Punctuation      |
+| ~[[:xdigit:]]~   | Hexadecimal      |
+| ~[[:graph:]]~    | Non-space        |
+| ~[[:cntrl:]]~    | Control Characters|
+
+** Backreferences
+- These are used to match previously matched pattern (subexpression).
+- ~\(\)~ (BRE) or ~()~ (ERE) can be used to enclose subexpression that can be used later for backreferencing.
+- ~\1~ (reference to the first subexpression) through ~\9~ (referenct to the ninth subexpression)
+- ~\n~ matches whatever was matched by *n*th parenthesized subexpression.
+- A line with two occurrences of *hello* will be matched using:
+- ~.*~ : any arbitrary number of characters.
+#+begin_src bash
+\(hello\).*\1
+#+end_src
+
+** BRE Operator Precedence
+- highest to lowest in this order.
+
+| Class |  Represents |
+| ~~[..]~~ ~[==]~ ~[::]~      | Char collation |
+| ~\~                 | Metachar |
+| ~[ ]~               | Bracket expansion |
+| ~\(\)~ ~\n~      | subexpressions and backreferences |
+| ~*~ ~{ \}~          | Repetition of preceding regex |
+|                     | Concatenation |
+| ~^~ ~$~             | Anchors |
+
+** ERE Operator Precedence
+- highest to lowest in this order.
+
+| Class |  Represents |
+| ~[..]~ ~[==]~ ~[::]~        | Char collation |
+| ~\~                 | Metachar |
+| ~[ ]~               | Bracket expansion |
+| ~( )~      | subexpressions or grouping |
+| ~*~ ~+~ ~?~ ~{ }~             | Repetition of preceding regex |
+|                     | Concatenation |
+| ~^~ ~$~              | Anchors |
+| ~\|~                     | Alternation |
