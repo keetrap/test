@@ -167,7 +167,6 @@
 *Searches for string which matches pattern with each line in the file.*
 *Default engine is BRE*
 ~grep 'pattern' filename~
-~command | grep 'pattern'~
 
 ** Examples
 
