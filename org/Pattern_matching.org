@@ -65,7 +65,7 @@
 - highest to lowest in this order.
 
 | Class |  Represents |
-| ~~[..]~~ ~[==]~ ~[::]~      | Char collation |
+| ~[..]~ ~[==]~ ~[::]~         | Char collation |
 | ~\~                 | Metachar |
 | ~[ ]~               | Bracket expansion |
 | ~\(\)~ ~\n~      | subexpressions and backreferences |
