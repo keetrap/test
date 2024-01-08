@@ -107,7 +107,7 @@
 | ~?~        | 0 or 1            |
 | ~{2}~      | Exactly 2         |
 | ~{2,5}~    | Between 2 and 5  |
-| ~2,~       | 2 or more         |
+| =2,=       | 2 or more         |
 
 
 ** RegEx Groups and Ranges
