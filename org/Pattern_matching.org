@@ -21,6 +21,10 @@
 | Character(s) | Description |
 | ~\{n,m\}~    | Range of occurrences of preceding pattern at least ~n~ and utmost ~m~ times     |
 | ~(\)~      | Grouping of regular expressions |
+| ~\n~       | Newline              |
+| ~\r~       | Carriage return      |
+| ~\t~       | Tab                  |
+| ~\0~       | Null character       |
 
 ** Special Characters (ERE)
 
@@ -107,7 +111,7 @@
 | ~?~        | 0 or 1            |
 | ~{2}~      | Exactly 2         |
 | ~{2,5}~    | Between 2 and 5  |
-| =2,}=      | 2 or more         |
+| ~{2,}~     | 2 or more         |
 
 
 ** RegEx Groups and Ranges
@@ -123,3 +127,36 @@
 | ~[0-7]~    | Digit from 0 to 7               |
 
     *Ranges are inclusive*
+
+** RegEx Character Classes
+
+| Expression | Description                          |
+| ~[ab-d]~   | One character of: a, b, c, d         |
+| ~[^ab-d]~  | One character except: a, b, c, d     |
+| ~\d~       | One digit                            |
+| ~\D~       | One non-digit                        |
+| ~\s~       | One whitespace                       |
+| ~\S~       | One non-whitespace                   |
+| ~\w~       | One word character                   |
+| ~\W~       | One non-word character               |
+| ~\x~       | Hexadecimal digit                    |
+
+** RegEx Anchors
+| Expression | Description            |
+| ~^~        | Start of string        |
+| ~$~        | End of string          |
+| ~\b~       | Word boundary          |
+| ~\B~       | Non-word boundary      |
+
+** RegEx Flags
+
+| Expression | Description                           |
+| ~g~        | Global match                          |
+| ~i~        | Ignore case                           |
+| ~i*~       | Case-sensitive                        |
+| ~m~        | `^` and `$` match start and end of line |
+| ~m*~       | Multiple lines                        |
+| ~s*~       | Treat string as single line           |
+| ~x*~       | Allow comments and whitespace pattern |
+| ~e*~       | Evaluate replacement                  |
+| ~U*~       | Ungreedy pattern                       |
