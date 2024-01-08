@@ -193,8 +193,6 @@ grep 'play' ip.txt
 ~ go play in the park
 
  grep 'y t' ip.txt
-~ come back before the sk`y t`urns dark
-~ Tr`y t`hem all before you perish
-
-
+~ come back before the sky turns dark
+~ Try them all before you perish
 #+end_src
