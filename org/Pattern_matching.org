@@ -66,7 +66,7 @@
 #+end_src
 
 ** BRE Operator Precedence
-- highest to lowest in this order.
+- Highest to lowest in this order.
 
 | Class |  Represents |
 | ~[..]~ ~[==]~ ~[::]~         | Char collation |
@@ -78,7 +78,7 @@
 | ~^~ ~$~             | Anchors |
 
 ** ERE Operator Precedence
-- highest to lowest in this order.
+- Highest to lowest in this order.
 
 | Class |  Represents |
 | ~[..]~ ~[==]~ ~[::]~        | Char collation |
@@ -154,9 +154,47 @@
 | ~g~        | Global match                          |
 | ~i~        | Ignore case                           |
 | ~i*~       | Case-sensitive                        |
-| ~m~        | `^` and `$` match start and end of line |
+| ~m~        | ~^~ and ~$~ match start and end of line |
 | ~m*~       | Multiple lines                        |
 | ~s*~       | Treat string as single line           |
 | ~x*~       | Allow comments and whitespace pattern |
 | ~e*~       | Evaluate replacement                  |
 | ~U*~       | Ungreedy pattern                       |
+
+
+
+* grep
+*Searches for string which matches pattern with each line in the file.*
+*Default engine is BRE*
+~grep 'pattern' filename~
+~command | grep 'pattern'~
+
+** Examples
+
+*** Basic String Search
+By default, grep will print all the input lines that match the given search patterns. The newline character \n is the line separator by default.
+
+#+begin_src bash
+cat ip.txt
+
+it is a warm and cozy day
+listen to what I say
+go play in the park
+come back before the sky turns dark
+
+There are so many delights to cherish
+Apple, Banana and Cherry
+Bread, Butter and Jelly
+Try them all before you perish
+#+end_src
+
+#+begin_src bash
+grep 'play' ip.txt
+~ go play in the park
+
+ grep 'y t' ip.txt
+~ come back before the sk`y t`urns dark
+~ Tr`y t`hem all before you perish
+
+
+#+end_src
