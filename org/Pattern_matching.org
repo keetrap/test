@@ -171,11 +171,10 @@
 ** Examples
 
 *** Basic String Search
-By default, grep will print all the input lines that match the given search patterns. The newline character \n is the line separator by default.
+By default, grep will print all the input lines that match the given search patterns. The newline character ~\n~ is the line separator by default.
 
 #+begin_src bash
 cat ip.txt
-
 it is a warm and cozy day
 listen to what I say
 go play in the park
@@ -195,3 +194,33 @@ grep 'play' ip.txt
 ~ come back before the sky turns dark
 ~ Try them all before you perish
 #+end_src
+
+#+begin_src bash
+printf 'apple\nbanana\nmango\nfig\n' | grep 'an'
+~ banana
+~ mango
+#+end_src
+
+*** Fixed string search
+[[ Regular Expression Basics]]
+
+#+begin_src bash
+echo 'int a[5] a5' | grep -o 'int'   # -o argument will only print the matching part of the stirng
+~ int
+
+echo 'int a[5] a5' | grep -o 'a5'
+~ a5
+
+echo 'int a[5] a5' | grep -o 'a[5]'
+~ a5    # This commnad again matching a5 but we want to match the a[5] part of the string for that we have to escape the square brackets [].
+
+echo 'int a[5] a5' | grep -o 'a\[5\]'
+~ a[5]
+# Insted of that we can also use the -F argument
+
+echo 'int a[5] a5' | grep -Fo 'a\[5\]'
+~ a[5]
+#+end_src
+
+#+RESULTS:
+: int
