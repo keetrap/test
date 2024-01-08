@@ -173,26 +173,14 @@
 *** Basic String Search
 By default, grep will print all the input lines that match the given search patterns. The newline character ~\n~ is the line separator by default.
 
-#+begin_src bash
-cat ip.txt
-it is a warm and cozy day
-listen to what I say
-go play in the park
-come back before the sky turns dark
-
-There are so many delights to cherish
-Apple, Banana and Cherry
-Bread, Butter and Jelly
-Try them all before you perish
-#+end_src
+We will be using [[RegEx_example.txt]] for example.
 
 #+begin_src bash
-grep 'play' ip.txt
-~ go play in the park
-
- grep 'y t' ip.txt
-~ come back before the sky turns dark
-~ Try them all before you perish
+grep 'the' ip.txt  #This command will print all the lines contains word "the"
+Mountain peaks touch the sky.
+Mountain trails wind through the forest.
+Ocean waves crash on the shore.
+The sun sets, coloring the sky.
 #+end_src
 
 #+begin_src bash
@@ -202,7 +190,6 @@ printf 'apple\nbanana\nmango\nfig\n' | grep 'an'
 #+end_src
 
 *** Fixed string search
-[[ Regular Expression Basics]]
 
 #+begin_src bash
 echo 'int a[5] a5' | grep -o 'int'   # -o argument will only print the matching part of the stirng
@@ -222,5 +209,17 @@ echo 'int a[5] a5' | grep -Fo 'a\[5\]'
 ~ a[5]
 #+end_src
 
-#+RESULTS:
-: int
+*** Case insensitive search
+
+Using ~-i~ we can perform case insensitive search.
+
+#+begin_src
+cat example.txt
+Apple
+Banana
+Mango
+Fig
+n
+grep -i 'apple' example.txt
+~ Apple
+#+end_src
