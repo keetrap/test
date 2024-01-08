@@ -37,7 +37,6 @@
 - The classes should be used within character enclosure braces as ~[character-class]~
 
 | Class            | Represents       |
-| :--------------: | :--------------- |
 | ~[[:print:]]~    | Printable        |
 | ~[[:alnum:]]~    | Alphanumeric     |
 | ~[[:alpha:]]~    | Alphabetic       |
