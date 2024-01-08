@@ -176,7 +176,7 @@ By default, grep will print all the input lines that match the given search patt
 We will be using [[RegEx_example.txt]] for example.
 
 #+begin_src bash
-grep 'the' ip.txt  #This command will print all the lines contains word "the"
+grep 'the' RegEx_example.txt  #This command will print all the lines contains word "the"
 Mountain peaks touch the sky.
 Mountain trails wind through the forest.
 Ocean waves crash on the shore.
@@ -188,6 +188,55 @@ printf 'apple\nbanana\nmango\nfig\n' | grep 'an'
 ~ banana
 ~ mango
 #+end_src
+
++ Using ~^~ we can match line staring with some character.
+  #+begin_src bash
+grep '^b' RegEx_example.txt
+bob123
+#+end_src
+
++ Using ~$~ we can match line ending with some character.
+  #+begin_src bash
+grep 'm$' RegEx_example.txt
+info@example.com
+user123@gmail.com
+#+end_src
+
+**** Wildcard ~.~
+The dot (.) in regular expressions is a wildcard that matches any single character except for a newline.
+#+begin_src bash
+grep '.' RegEx_example.txt # This will match any line that contains at least one character.
+
+grep 'c.m' RegEx_example.txt
+~ info@example.com   # It matched with com in email.
+~ user123@gmail.com
+~ December 5, 2022   # It matched with cem in December
+#+end_src
+
+#+begin_src bash
+grep '.s' RegEx_example.txt # This will match any chracter followed by s
+#+end_src
+
+#+begin_src bash
+grep '\.' RegEx_example.txt # This will match a literal dot (.) in the lines
+Mountain peaks touch the sky.
+Mountain trails wind through the forest.
+Ocean waves crash on the shore.
+The sun sets, coloring the sky.
+info@example.com
+user123@gmail.com
+webmaster@domain.org
+    console.log("Condition is true");
+    console.log("Condition is false");
+
+
+grep '\.$' RegEx_example.txt # This will match the lines ending with dot (.)
+Mountain peaks touch the sky.
+Mountain trails wind through the forest.
+Ocean waves crash on the shore.
+The sun sets, coloring the sky.
+#+end_src
+
 
 *** Fixed string search
 
@@ -219,7 +268,7 @@ Apple
 Banana
 Mango
 Fig
-n
+
 grep -i 'apple' example.txt
 ~ Apple
 #+end_src
