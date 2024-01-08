@@ -53,10 +53,10 @@
 
 ** Backreferences
 - These are used to match previously matched pattern (subexpression).
-- ~\(\)~ (BRE) or ~()~ (ERE) can be used to enclose subexpression that can be used later for backreferencing.
+- ~\(\)~ (BRE) or ~()~ (ERE) can be use to enclose subexpression that can be use later for backreferencing.
 - ~\1~ (reference to the first subexpression) through ~\9~ (referenct to the ninth subexpression)
-- ~\n~ matches whatever was matched by *n*th parenthesized subexpression.
-- A line with two occurrences of *hello* will be matched using:
+- ~\n~ matches whatever was matching by ~n~ th parenthesized subexpression.
+- A line with two occurrences of *hello* will be match using:
 - ~.*~ : any arbitrary number of characters.
 #+begin_src bash
 \(hello\).*\1
@@ -85,4 +85,42 @@
 | ~*~ ~+~ ~?~ ~{ }~             | Repetition of preceding regex |
 |                     | Concatenation |
 | ~^~ ~$~              | Anchors |
-| ~\|~                     | Alternation |
+| ~|~                       | Alternation |
+
+
+
+** Regular Expression Basics
+| Expression | Description                         |
+| ~.~         | Any character except newline         |
+| ~a~         | The character a                     |
+| ~ab~        | The string ab                       |
+| ~a~         | The character a                     |
+| ~b~         | The character b                     |
+| ~a*~        | 0 or more occurrences of the character a |
+| ~\~         | Escapes a special character         |
+
+*RegEx escape sequences Escaping is a way of treating characters which have a special meaning in regular expressions literlly, rather than as special characters.*
+
+** RegEx Quantifiers
+| Expression | Description      |
+| ~*~        | 0 or more         |
+| ~+~        | 1 or more         |
+| ~?~        | 0 or 1            |
+| ~{2}~      | Exactly 2         |
+| ~{2,5}~    | Between 2 and 5  |
+| ~2,~       | 2 or more         |
+
+
+** RegEx Groups and Ranges
+
+| Expression | Description                     |
+| ~(...)~    | Capturing group                 |
+| ~.~        | Any character except newline ~\n~ |
+| ~(a b)~    | Grouping (a and b)              |
+| ~[abc]~    | Range (a or b or c)             |
+| ~[^abc]~   | Not (a or b or c)               |
+| ~[a-q]~    | Lowercase letter from a to q    |
+| ~[A-Q]~    | Uppercase letter from A to Q    |
+| ~[0-7]~    | Digit from 0 to 7               |
+
+    *Ranges are inclusive*
