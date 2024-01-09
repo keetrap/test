@@ -104,15 +104,15 @@ Ref: https://standards.ieee.org/standard/1003_1-2001.html
 - A line with two occurrences of /hello/ will be matched using:
   - =.*= : any arbitrary number of characters.
 
-  #+begin_src regex
+#+begin_src regex
   \(hello\).*\1
-  #+end_src
+#+end_src
 
 *** BRE Operator Precedence
 :PROPERTIES:
 :CUSTOM_ID: bre-operator-precedence
 :END:
-- highest to lowest in this order.
+- Highest to lowest in this order.
 
 | Class                | Represents                        |
 |----------------------+-----------------------------------|
@@ -128,7 +128,7 @@ Ref: https://standards.ieee.org/standard/1003_1-2001.html
 :PROPERTIES:
 :CUSTOM_ID: ere-operator-precedence
 :END:
-- highest to lowest in this order.
+- Highest to lowest in this order.
 
 | Class                | Represents                    |
 |----------------------+-------------------------------|
@@ -152,7 +152,6 @@ Searches for string which matches /pattern/ with each line in the file.
 :CUSTOM_ID: default-engine-is-bre
 :END:
 - =grep 'pattern' filename=
-- =command | grep 'pattern'=
 
 *** Examples
 :PROPERTIES:
@@ -160,300 +159,217 @@ Searches for string which matches /pattern/ with each line in the file.
 :END:
 We will consider [[/Week-4/Files/names.txt][names.txt]] for the
 explanation. A comment starts with =#= and continues till the end of the
-line. * =grep 'pattern' <filename>= or =command | grep 'pattern'= -
-Looking for a /string/ as a pattern in file /filename/. - Print the
-lines which contain word 'Raman'.
+line. * =grep 'pattern' <filename>=
 
-#+begin_example
-    ```terminal
-    ~$ grep 'Raman' names.txt
-    ED22B902 Raman Singh
-    ```
+- Looking for a /string/ as a pattern in file /filename/.
+  + Print thelines which contain word 'Raman'.
+
+#+begin_src bash
+~$ grep 'Raman' names.txt
+ED22B902 Raman Singh
+#+end_src
+
+- Print for lines which contain pattern /Anu/.
+#+begin_src bash
+~$ grep 'Anu' names.txt
+EE22B905 Anu K. Jain
+NA22B906 Anupama Shridhar
+#+end_src
     
-- Print for lines which contain pattern 'Anu'.
-    
-    ```terminal
-    $ grep 'Anu' names.txt            # lines that contain
-    EE22B905 Anu K. Jain
-    NA22B906 Anupama Shridhar
-    ``` 
-    
-    + ` 'Anu' ` : **Anu** , **Anu**pama
 - Try similar commands in terminal
 
-    ```bash
-    grep 'Sa' names.txt               # lines containing string 'Sa' together. 
-    ```
-    
-    ```bash
-    grep 'ai' names.txt               # lines containing string 'ai' together. 
-    ```
-    
-- Piping is very important feature which can be used ` grep ` any command output.
-    + Passing input using pipe to grep and searching the pattern 'ai'.
+#+begin_src bash
+grep 'Sa' names.txt   # lines containing string 'Sa' together.
+grep 'ai' names.txt   # lines containing string 'ai' together.
+#+end_src
 
-    ```terminal
-    ~$ cat names.txt | grep 'ai'      # you have seen similar command earlier !
-    ```
-    
-- ` . ` to match a single character.
+- Piping is very important feature which can be used ~grep~ any command output.
+  + Passing input using pipe to grep and searching the pattern ~ai~.
+#+begin_src bash
+~$ cat names.txt | grep 'ai' # you have seen similar command earlier !
+#+end_src
 
-    ```terminal
-    ~$ cat names.txt | grep 'S.n'
-    ED22B902 Raman Singh
-    PH22B907 Vel Sankaran
-    ```
-    
-    + ` 'S.n' ` matches 3 letters, 'S' followed any single character and 'n'.
-    + **Sin**gh and **San**karan in example above.
-    
-    ```terminal
-    ~$ cat names.txt | grep '.am'     # matches any single character, followed by 'am'
-    MM22B901 Mary Manickam
-    ED22B902 Raman Singh
-    CS22B904 Charles M. Sagayam
-    NA22B906 Anupama Shridhar
-    ```
-    
-    + ` '.am' ` : Manic**kam**, **Ram**an, Saga**yam**, Anup**ama**
 
-- ` $ ` to match pattern at/towards the end of line.
-    
-    ```terminal
+- ~.~ to match a single character.
+#+begin_src bash
+~$ cat names.txt | grep 'S.n'
+ED22B902 Raman Singh
+PH22B907 Vel Sankaran
+#+end_src
+
+  +  ~S.n~ matches 3 letters, ~S~ followed any single character and ~n~.
+    #+begin_src bash
+~$ cat names.txt | grep '.am'     # matches any single character, followed by 'am'
+MM22B901 Mary Manickam
+ED22B902 Raman Singh
+CS22B904 Charles M. Sagayam
+NA22B906 Anupama Shridhar
+#+end_src
+
+    + ~$~ to match pattern at/towards the end of line.
+        #+begin_src bash
     ~$ cat names.txt | grep '.am$'    # '.am' pattern at the end of line.
-    MM22B901 Mary Manickam
-    CS22B904 Charles M. Sagayam
-    ```
-    
-    + ` '.am$' ` : Manic**kam**, Saga**yam**
+     MM22B901 Mary Manickam
+     CS22B904 Charles M. Sagayam
+        #+end_src
 
-- ` \. ` to match ` . ` literal.
-    
-    ```terminal
-    ~$ cat names.txt | grep '\.'
-    CS22B904 Charles M. Sagayam
-    EE22B905 Anu K. Jain
-    ```
-    
-    + ` '\.' ` : '.' in M. , K.
-    
-    ```terminal
-    ~$ cat names.txt | grep '.\.'     # match an Abbreviation
-    CS22B904 Charles M. Sagayam
-    EE22B905 Anu K. Jain
-    ```
-    
-    + ` '.\.` : **M.**, **K.**
-    
-- ` ^ ` to match pattern at/from the beginning.
-    
-    ```terminal
-    ~$ cat names.txt | grep '^E'      # line begins with 'E', case-sensitive.
-    ED22B902 Raman Singh
-    EE22B905 Anu K. Jain        
-    ```
-    
-    or 
-    
-    ```terminal
-    ~$ cat names.txt | grep  -i '^e'  # line begins with 'E' or 'e', case-insensitive (-i).
-    ED22B902 Raman Singh
-    EE22B905 Anu K. Jain
-    ```
-    
-    + ` -i '^e' ` : **E**D22B902, **E**E22B905
-- Try in a terminal
-    
-    ```bash
-    cat names.txt | grep '^M'
-    ```
+    + ~\.~ to match ~.~ literal.
+        #+begin_src
+      ~$ cat names.txt | grep '\.
+      CS22B904 Charles M. Sagayam
+      EE22B905 Anu K. Jain
+      #+end_src
 
-- ` \b ` to match word boundary, irrespective of the position of the word.
+  #+begin_src bash
+~$ cat names.txt | grep '.\.'     # match an Abbreviation
+CS22B904 Charles M. Sagayam
+EE22B905 Anu K. Jain
+#+end_src
     
-    ```terminal
-    ~$ cat names.txt | grep 'an\b'
-    ED22B902 Raman Singh
-    PH22B907 Vel Sankaran
-    ```
-    
-    + ` 'an\b' ` : Ram**an**, Sankar**an** (Word boundary as well as end of line)
-    
-- Try in terminal
-    
-    ```bash
-    cat names.txt | grep 'am\b'
-    ```
 
-- ` [] ` matching a character from characters or range of characters enclosed.
-    
-    ```terminal
-    $ cat names.txt | grep 'M[ME]'
-    MM22B901 Mary Manickam
-    ME22B903 Umair Ahmad
-    ```
-    
-    + Matches 'M' and then 'M' or 'E', i.e. matches 'MM' or 'ME'
-    + ` 'M[ME]' ` : **MM**22B901, **ME**22B903
-    
-    
-- Try in terminal
+- ~^~ to match pattern at/from the beginning.
+#+begin_src bash
+~$ cat names.txt | grep '^E'      # line begins with 'E'
+ED22B902 Raman Singh
+EE22B905 Anu K. Jain
 
-    ```bash
-    cat names.txt | grep 'E[ED]'      # matches 'EE' or 'ED'
-    ```
-    
-    ```bash
-    cat names.txt | grep '[ME]E'      # matches 'ME' or 'EE'
-    ```
-    
-    ```bash
-    ~$ cat names.txt | grep '[aeiou]' # matches vowels.
-    ```
-    
-    ```bash
-    ~$ cat names.txt | grep '[aeiou][aeiou]' # matches two vowels side by side.
-    ```
+~$ cat names.txt | grep  -i '^e'  # line begins with 'E' or 'e', case-insensitive (-i).
+ED22B902 Raman Singh
+EE22B905 Anu K. Jain
+#+end_src
 
-- ` [start-stop] ` Matching any characters specified by range ` start-stop `.
-    + ` [1-4] ` : Matches characters in range 1 to 4
-    
-    ```terminal
-    $ cat names.txt | grep 'B90[1-4]'
-    MM22B901 Mary Manickam
-    ED22B902 Raman Singh
-    ME22B903 Umair Ahmad
-    CS22B904 Charles M. Sagayam
-    ```
-    
-    + Match 'B90' followed by any numbers in range 1 to 4
-    + ` 'B90[1-4] ' ` : MM22**B901**, ED22**B902**, ME22**B903**, CS22**B904**
-    
-    
-- Try in terminal
-    
-    ```bash
-    cat names.txt | grep 'B90[5-7]'   # match 'B90' followed by any digits from 5 to 7
-    ```
-    
-    ```bash
-    cat names.txt | grep 'B90[5-7]'   # match 'B90' followed by any digits from 1 to 9
-    ```
-    
-    ```bash
-    cat names.txt | grep '[M-Z][aeiou]'  
-    # match any character from 'M' to 'Z' followed by a vowel
-    ```
 
-- ` [^] ` match negation of the characters.
-    
-    ```terminal
-    ~$ cat names.txt | grep 'B90[^5-7]'
-    MM22B901 Mary Manickam
-    ED22B902 Raman Singh
-    ME22B903 Umair Ahmad
-    CS22B904 Charles M. Sagayam
-    ```
-    
-    + Match 'B90' followed by digits not in range 5 to 7
-    + ` 'B90[^5-7] ' ` : MM22**B901**, ED22**B902**, ME22**B903**, CS22**B904**
-    
-    
-- ` .* ` match any number of characters including 0.
-    
-    ```terminal
-    ~$ cat names.txt | grep 'S.*[mn]'
-    ED22B902 Raman Singh
-    CS22B904 Charles M. Sagayam
-    PH22B907 Vel Sankaran
-    ```
-    
-    + Match 'S', followed by any number of characters ('.*'), then 'm' or 'n'
-    + ` 'S.*[mn]' ` : **Sin**gh, C**S22B904 Charles M. Sagayam**, **Sankaran**
-    + What if we want to match just names and not part of roll number?
-    + We will introduce word boundary before 'S'
-    
-    ```terminal
-    ~$ cat names.txt | grep '\bS.*[mn]'
-    #HIDDEN#
-    ```
-    
-    + ` '\bS.*[mn]' ` : **Sin**gh, **Sagayam**, **Sankaran**
-    
-- ` \{m\} ` preceding character repeats exactly 'm' times
-    
-    ```terminal
-    ~$ cat names.txt | grep 'M\{2\}'
-    MM22B901 Mary Manickam
-    ```
-    
-    + 'M' repeats exactly twice.
-    + ` 'M\{2\}' ` : **MM**22B901
-    
-- ` \{m, n\} ` preceding character repeats at least 'm' times and at most 'n' times.
-    
-    ```terminal
-    ~$ cat names.txt | grep 'E\{1,2\}'
-    ED22B902 Raman Singh
-    ME22B903 Umair Ahmad
-    EE22B905 Anu K. Jain
-    ```
-    + 'E' repeates once or twice.
-    + ` 'E\{1,2\}' ` : **E**D22B902, M**E**22B903, **EE**22B905
+ + Try in a terminal
+     #+begin_src bash
+ cat names.txt | grep '^'
+     #+end_src
 
-- ` \{m,\} ` preceding character repeats at least 'm' times.
-    + Try in terminal
-    
-    ```bash
-    cat names.txt | grep 'M\{1,\}'    # 'M' repeats at least 1 time.
-    ```
+ + ~\b~ to match word boundary, irrespective of the position of the word.
+   #+begin_src bash
+ ~$ cat names.txt | grep 'an\b'
+ ED22B902 Raman Singh
+ PH22B907 Vel Sankaran
+ #+end_src
 
-- ` \{,n\} ` preceding character repeats at most 'n' times.
-    + Try in terminal
+   + Try in terminal
+#+begin_src bash
+cat names.txt | grep 'am\b'
+#+end_src
+
+
+- ~[]~ matching a character from characters or range of characters enclosed.
+  #+begin_src bash
+~$ cat names.txt | grep 'M[ME]'
+MM22B901 Mary Manickam
+ME22B903 Umair Ahmad
+#+end_src
     
-    ```bash
-    cat names.txt | grep 'M\{,2\}'    # 'M' repeats at most 2 times.
-    ``` 
+  + Try in terminal
+     #+begin_src bash
+cat names.txt | grep 'E[ED]'      # matches 'EE' or 'ED'
+#+end_src
+
+    #+begin_src bash
+cat names.txt | grep '[ME]E'      # matches 'ME' or 'EE'
+#+end_src
+
+    #+begin_src bash
+cat names.txt | grep '[aeiou]'    # matches vowels.
+#+end_src
+
+    #+begin_src bash
+cat names.txt | grep '[aeiou][aeiou]'  # matches two vowels side by side.
+#+end_src
+
+
+
+- ~[start-stop]~ Matching any characters specified by range ~start-stop~.
+  + ~[1-4]~ : Matches characters in range 1 to 4
+    #+begin_src
+MM22B901 Mary Manickam
+ED22B902 Raman Singh
+ME22B903 Umair Ahmad
+CS22B904 Charles M. Sagayam
+    #+end_src
     
-- ` \(pattern\) ` grouping 'pattern's and backreferences.
-    + The 'pattern' inside parenthesis can be any valid pattern.
+    + Match ~B90~ followed by digits not in range 5 to 7
+
     
-    ```terminal
-    ~$ cat names.txt | grep '\(ma\).*\1'
-    ME22B903 Umair Ahmad
-    ```
+- ~.*~  match any number of characters including 0.
+    #+begin_src bash
+~$ cat names.txt | grep 'S.*[mn]'
+ED22B902 Raman Singh
+CS22B904 Charles M. Sagayam
+PH22B907 Vel Sankaran
+#+end_src
     
-    + pattern matches 'ma' (` '\(ma\)' `), followed by any number of characters (` '.*' `), followed by 'ma' ( backreferenced with ` '\1' ` to the first pattern in parenthesis.)
-    + ` '\(ma\).*\1' ` : U**mair Ahma**d
+  + Match ~S~, followed by any number of characters ~.*~, then ~m~ or ~n~
+  + What if we want to match just names and not part of roll number?
+  + We will introduce word boundary before ~S~
     
+- ~\{m\}~ preceding character repeats exactly ~m~ times
     
-    ```terminal
-    ~$ cat names.txt | grep '\(a.\)\{3\}'
-    CS22B904 Charles M. Sagayam
-    ```
+    #+begin_src bash
+~$ cat names.txt | grep 'M\{2\}'
+MM22B901 Mary Manickam
+#+end_src
     
-    + 'a' and any character repeated thrice.
-    + ` '\(a.\)\{3\}' ` : S**agayam**
+  + ~M~ repeats exactly twice.
+  + ~M\{2\}~ : *MM*\22B901
+    
+- ~\{m,n\}~ preceding character repeats at least ~m~ times and at most ~n~ times.
+    
+    #+begin_src bash
+~$ cat names.txt | grep 'E\{1,2\}'
+ED22B902 Raman Singh
+ME22B903 Umair Ahmad
+EE22B905 Anu K. Jain
+#+end_src
+  + 'E' repeates once or twice.
+  + ~E\{1,2\}~ : *E*\D22B902, M\*E*22B903, *EE*\22B905
+
+- ~{m,\}~ preceding character repeats at least ~m~ times.
+  + Try in terminal
+    #+begin_src
+cat names.txt | grep 'M\{1,\}'    # 'M' repeats at least 1 time.
+#+end_src
+
+- ~\{,n\}~ preceding character repeats at most ~n~ times.
+  + Try in terminal
+    #+begin_src bash
+cat names.txt | grep 'M\{,2\}'    # 'M' repeats at most 2 times.
+#+end_src
+    
+- ~\(pattern\)~ grouping 'pattern's and backreferences.
+  + The ~pattern~ inside parenthesis can be any valid pattern.
+    
+    #+begin_src bash
+~$ cat names.txt | grep '\(ma\).*\1'
+ME22B903 Umair Ahmad
+  #+end_src
+    
+  + pattern matches ~ma~ followed by any number of characters ~.*~, followed by 'ma' ( backreferenced with ~\1~ to the first pattern in parenthesis.)
+  + ~\(ma\).*\1~  : U *mair Ahma* d
+    #+begin_src bash
+~$ cat names.txt | grep '\(a.\)\{3\}'
+CS22B904 Charles M. Sagayam
+#+end_src
+
+    + ~a~ and any character repeated thrice.
+    + ~\(a.\)\{3\}~ : S *agayam*
     + Change 3 to 2 and see the output.
     
-- Try in terminal
+  + Try in terminal
 
-    ```bash
-    cat names.txt | grep '\(.a\).*\1'  
-    ```
+      #+begin_src  bash
+cat names.txt | grep '\(.a\).*\1'
+      #+end_src
     
-    + any character and 'a' (` '\(.a\)' ` => 1), followed by any number of characters (` '.*' `), then any character and 'a' (` '\1' `).        ......... (1)
+    + any character and ~a~ ( ~'\(.a\)'~ => 1), followed by any number of characters (~'.*'~), then any character and ~a~ (~'\1'~).
     
-    ```bash
-    cat names.txt | grep '\(a.\).*\1'  
-    ```
-    
-    + Follows similar interpretation as (1).
-    
-    ```bash
-    cat names.txt | grep '\(a.\)\{2,3\}'
-    ```
-    
-#+end_example
+    #+begin_src bash
+cat names.txt | grep '\(a.\).*\1'
+    #+end_src
 
 *** Switch to use ERE
 :PROPERTIES:
@@ -765,16 +681,16 @@ lines which contain word 'Raman'.
 
   - =[[:punct:]]= matches punctuation characters.
 
-    - Punctuation Characters : =`~\!@#$%^&*_-+=[]{}();:,.<>/?""''=
+  - Punctuation Characters : =`~\!@#$%^&*_-+=[]{}();:,.<>/?""''=
 
-    To match a punctuation character at the beginning of the line
+  To match a punctuation character at the beginning of the line
 
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '^[[:punct:]]'
-    , : start with comma end with equals : =
-    #+end_src
+  #+begin_src terminal
+  ~$ cat chartypes.txt | grep '^[[:punct:]]'
+  , : start with comma end with equals : =
+  #+end_src
 
-    Try the questions below.
+  Try the questions below.
 
     - Write a command to match a punctuation character at the end of the
       line.
