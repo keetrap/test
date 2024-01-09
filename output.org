@@ -291,10 +291,8 @@ ED22B902 Raman Singh
 ME22B903 Umair Ahmad
 CS22B904 Charles M. Sagayam
 #+end_src
-    
     + Match ~B90~ followed by digits not in range 5 to 7
 
-    
 - ~.*~  match any number of characters including 0.
     #+begin_src bash
 ~$ cat names.txt | grep 'S.*[mn]'
