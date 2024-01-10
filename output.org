@@ -220,7 +220,7 @@ NA22B906 Anupama Shridhar
       EE22B905 Anu K. Jain
       #+end_src
 
-  #+begin_src bash
+        #+begin_src bash
 ~$ cat names.txt | grep '.\.'     # match an Abbreviation
 CS22B904 Charles M. Sagayam
 EE22B905 Anu K. Jain
@@ -239,26 +239,26 @@ EE22B905 Anu K. Jain
 #+end_src
 
 
- + Try in a terminal
+   + Try in a terminal
+    #+begin_src bash
+   cat names.txt | grep '^'
+       #+end_src
+
+   + ~\b~ to match word boundary, irrespective of the position of the word.
      #+begin_src bash
- cat names.txt | grep '^'
-     #+end_src
+   ~$ cat names.txt | grep 'an\b'
+   ED22B902 Raman Singh
+   PH22B907 Vel Sankaran
+   #+end_src
 
- + ~\b~ to match word boundary, irrespective of the position of the word.
-   #+begin_src bash
- ~$ cat names.txt | grep 'an\b'
- ED22B902 Raman Singh
- PH22B907 Vel Sankaran
- #+end_src
-
-   + Try in terminal
-#+begin_src bash
+     + Try in terminal
+        #+begin_src bash
 cat names.txt | grep 'am\b'
 #+end_src
 
 
 - ~[]~ matching a character from characters or range of characters enclosed.
-  #+begin_src bash
+    #+begin_src bash
 ~$ cat names.txt | grep 'M[ME]'
 MM22B901 Mary Manickam
 ME22B903 Umair Ahmad
@@ -814,15 +814,15 @@ Aadhar card number contains 12 digits and can look like 123456781234 for example
     Roll numbers in IIT for regular students are of the pattern MM22B001 where the first two letters correspond to the Department code, 2 digits for the year of joining, then the program code character and then a 3 digit number for their roll number within the class
     #+end_src
 
-    - ='\b[[:alpha:]]{2}'= : *MM*
+    - =\b[[:alpha:]]{2}= : *MM*
 
-    - ='[[:digit:]]{2}'= : *22*
+    - =[[:digit:]]{2}= : *22*
 
-    - ='[[:alpha:]]'= : *B*
+    - =[[:alpha:]]= : *B*
 
-    - ='[[:digit:]]{3}\b'= : *001*
+    - =[[:digit:]]{3}\b= : *001*
 
-    - Try the command with pattern - ='[[:alnum:]]{8}'=
+    - Try the command with pattern - =[[:alnum:]]{8}=
 
   - To match the line that contains URL.
 
