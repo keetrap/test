@@ -377,177 +377,144 @@ cat names.txt | grep '\(a.\).*\1'
 
 - =grep -E 'pattern' filename=
 
-  - =+= match preceding pattern once or more number of times.
+- =+= match preceding pattern once or more number of times.
 
     #+begin_src terminal
-    ~$ cat names.txt | egrep 'M+'
-    MM22B901 Mary Manickam
-    ME22B903 Umair Ahmad
-    CS22B904 Charles M. Sagayam
+~$ cat names.txt | egrep 'M+'
+MM22B901 Mary Manickam
+ME22B903 Umair Ahmad
+CS22B904 Charles M. Sagayam
+#+end_src
+
+- Match 'M' at least once. Similar to =\{1,\}=
+    #+begin_src terminal
+~$ cat names.txt | egrep '^M+'
+MM22B901 Mary Manickam
+ME22B903 Umair Ahmad
+#+end_src
+
+- Match 'M' at least once at the beginning of the line.
+
+
+- =*= matches preceding character 0 or more times
+    #+begin_src terminal
+~$ cat names.txt | egrep '^M*'
     #+end_src
 
-    - Match 'M' at least once. Similar to ='\{1,\}'=
-    - ='M+'= : *MM*22B901 *M*ary *M*anickam, *M*E22B903, *M*.
+- Match 'M' 0 or more number of times at the beginning of the line.
+    + It dumps the whole [[/Week-4/Files/names.txt][names.txt]] file.
+      + Try in terminal
+              #+begin_src sh
+      cat names.txt | egrep 'M*a'
+              #+end_src
+
+      + Matches string containing, 'a', 'Ma', 'MMa', 'MMMa'.....
+
+              #+begin_src sh
+      cat names.txt | egrep 'M.*a'
+      #+end_src
+
+      + Matches ~M~ then any number of characters (=.*=) then ~a~.
+
+- =(pattern)= match subexpression
 
     #+begin_src terminal
-    ~$ cat names.txt | egrep '^M+'
-    MM22B901 Mary Manickam
-    ME22B903 Umair Ahmad    
+~$ cat names.txt | egrep '(ma)+'
+ED22B902 Raman Singh
+ME22B903 Umair Ahmad
+NA22B906 Anupama Shridhar
     #+end_src
 
-    - Match 'M' at least once at the beginning of the line.
-    - ='^M+'= : *MM*22B901, *M*E22B903
+    + matches ~ma~ once or more times.
 
-  - =*= matches preceding character 0 or more times
+    + Try in terminal
+
+      #+begin_src sh
+cat names.txt | egrep '(ma)*'
+#+end_src
+
+    + Matches ~ma~ 0 or more times
+
+      #+begin_src sh
+cat names.txt | egrep '(ma){2}'
+      #+end_src
+
+    + Matches ~ma~ exactly twice consecutively.
+
+- =(pattern1 | pattern2)= match ~pattern1~ or ~pattern2~
 
     #+begin_src terminal
-    ~$ cat names.txt | egrep '^M*'
+~$ cat names.txt | egrep '(ED|ME)'
+ED22B902 Raman Singh
+ME22B903 Umair Ahmad
     #+end_src
 
-    - Match 'M' 0 or more number of times at the beginning of the line.
-    - It dumps the whole [[/Week-4/Files/names.txt][names.txt]] file
+    + Try in terminal
 
-  - Try in terminal
+      #+begin_src sh
+cat names.txt | egrep '(Anu|Raman)'
+      #+end_src
 
-    #+begin_src sh
-    cat names.txt | egrep 'M*a'
-    #+end_src
+    +  Matches string containing ~Anu~ or ~Raman~
 
-    - Matches string containing, 'a', 'Ma', 'MMa', 'MMMa'.....
+      #+begin_src sh
+cat names.txt | egrep '(an|an)$'
+      #+end_src
 
-    #+begin_src sh
-    cat names.txt | egrep 'M.*a'
-    #+end_src
+      - Matches with ~am~ or ~an~ at the end of the line.
+      - Remove ~$~ and try.
 
-    - Matches 'M' then any number of characters (=.*=) then 'a'.
+- It is important to gain flexibility to use =grep= on any command.
 
-  - =(pattern)= match subexpression
+      + =.{4}$= matches any character 4 times at the end of the line,
+        before ensures word boundary, and helps not matching the section.
+      + =.{4}$= is equivalent to =....$=
 
-    #+begin_src terminal
-    ~$ cat names.txt | egrep '(ma)+'
-    ED22B902 Raman Singh
-    ME22B903 Umair Ahmad
-    NA22B906 Anupama Shridhar
-    #+end_src
+- To list the package names with 4 characters starting with ~g~.
+      #+begin_src sh
+~$ dpkg-query -W -f'${Section} ${binary:Package}\n' | egrep ' g.{3}$'
+interpreters gawk
+gnome gdm3
+utils gpgv
+utils grep
+utils gzip
+#+end_src
 
-    - matches 'ma' once or more times.
-    - =(ma)+= : Ra*ma*n, U*ma*ir Ah*ma*d, Anupa*ma*
+      + To list the package names starting with ~g~ and having 1 to 6 characters.
 
-  - Try in terminal
+      #+begin_src terminal
+~$ dpkg-query -W -f'${Section} ${binary:Package}\n' | egrep ' g.{1,5}$'
+interpreters gawk
+gnome gcr
+devel gdb
+admin gdisk
+gnome gdm3
+#+end_src
 
-    #+begin_src sh
-    cat names.txt | egrep '(ma)*'
-    #+end_src
+     + To list the package names in section ~math~.
+      #+begin_src terminal
+~$ dpkg-query -W -f'${Section} ${binary:Package}\n' | egrep '^math'
+math bc
+math dc
+math galculator
+math gnome-calculator
+#+end_src
 
-    - Matches 'ma' 0 or more times
+     + Try in a terminal and figure out the difference with command above.
 
-    #+begin_src sh
-    cat names.txt | egrep '(ma){2}'
-    #+end_src
+      #+begin_src sh
+      dpkg-query -W -f'${Section} ${binary:Package}\n' | egrep 'math'
+      #+end_src
 
-    - Matches 'ma' exactly twice consecutively.
+      - Prints packages or sections having ~math~ as string
 
-  - =(pattern1 | pattern2)= match 'pattern1' or 'pattern2'
+      - Try in a terminal
 
-    #+begin_src terminal
-    ~$ cat names.txt | egrep '(ED|ME)'
-    ED22B902 Raman Singh
-    ME22B903 Umair Ahmad
-    #+end_src
+        #+begin_src sh
+dpkg-query -W -f'${Section} ${binary:Package}\n' | egrep ' kd.*$'
+      #+end_src
 
-    - Matches 'ME' or 'ED'
-    - ='(ED|ME)'= : *ED*22B902, *ME*22B903
-
-  - Try in terminal
-
-    #+begin_src sh
-    cat names.txt | egrep '(Anu|Raman)'
-    #+end_src
-
-    - Matches string containing 'Anu' or 'Raman'
-
-    #+begin_src sh
-    cat names.txt | egrep '(an|an)$'
-    #+end_src
-
-    - Matches with 'am' or 'an' at the end of the line.
-    - Remove '$' and try.
-
-  - It is important to gain flexibility to use =grep= on any command.
-
-  - We will discuss this for a command that we have seen earlier namely
-    [[/Week-3/Lecture3-4.md#dpkg-query][=dpkg-query=]]
-
-  - Using =dpkg-query= and =egrep= To list package names with 4
-    characters
-
-    #+begin_src terminal
-    ~$ dpkg-query -W -f'${Section} ${binary:Package}\n' | egrep ' .{4}$'
-    #+end_src
-
-    First 5 lines of output
-
-    #+begin_src terminal
-    shells bash
-    admin bolt
-    utils cpio
-    admin cron
-    net cups
-    #+end_src
-
-    - =' .{4}$'= matches any character 4 times at the end of the line,
-      before ensures word boundary, and helps not matching the section.
-    - =' .{4}$'= is equivalent to =' ....$'=
-    - =' .{4}$'= : ** bash*, * bolt*, * cpio*, * cron*, * cups**
-
-    To list the package names with 4 characters starting with 'g'.
-
-    #+begin_src terminal
-    ~$ dpkg-query -W -f'${Section} ${binary:Package}\n' | egrep ' g.{3}$'
-    interpreters gawk
-    gnome gdm3
-    utils gpgv
-    utils grep
-    utils gzip
-    #+end_src
-
-    To list the package names starting with 'g' and having 1 to 6
-    characters
-
-    #+begin_src terminal
-    ~$ dpkg-query -W -f'${Section} ${binary:Package}\n' | egrep ' g.{1,5}$'
-    interpreters gawk
-    gnome gcr
-    devel gdb
-    admin gdisk
-    gnome gdm3
-    #+end_src
-
-    To list the package names in section 'math'
-
-    #+begin_src terminal
-    ~$ dpkg-query -W -f'${Section} ${binary:Package}\n' | egrep '^math'
-    math bc
-    math dc
-    math galculator
-    math gnome-calculator
-    #+end_src
-
-    Try in a terminal and figure out the difference with command above
-
-    #+begin_src sh
-    dpkg-query -W -f'${Section} ${binary:Package}\n' | egrep 'math'
-    #+end_src
-
-    - Prints packages or sections having 'math' as string
-
-    Try in a terminal
-
-    #+begin_src sh
-    dpkg-query -W -f'${Section} ${binary:Package}\n' | egrep ' kd.*$'
-    #+end_src
-
-    - Prints package names starting with 'kd'
+      - Prints package names starting with ~kd~
 
 *** Matching character sets with =grep=
 :PROPERTIES:
@@ -556,272 +523,254 @@ cat names.txt | grep '\(a.\).*\1'
 - We will consider [[/Week-4/Files/chartypes.txt][chartypes.txt]] file
   for demonstration.
 
-- It contains text, special characters as well as control characters
-  (similar file is used in the lecture video).
+- It contains text, special characters as well as control characters.
 
   - =[[:alpha:]]= matches alphabetic characters.
 
     To match an alphabetic character at the beginning of the line
 
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '^[[:alpha:]]'
-    hello : alphabetical stuff : 5g
-    l : start lower end upper : H
-    L : start upper end lower : h
-    #+end_src
+    #+begin_src bash
+~$ cat chartypes.txt | grep '^[[:alpha:]]'
+hello : alphabetical stuff : 5g
+l : start lower end upper : H
+L : start upper end lower : h
+#+end_src
 
-    - ='^[[:alpha:]]'= : *h*ello, *l*, *L*
+  - To match an alphabetic character at the end of the line
 
-    To match an alphabetic character at the end of the line
+    #+begin_src bash
+~$ cat chartypes.txt | grep '[[:alpha:]]$'
+hello : alphabetical stuff : 5g
+l : start lower end upper : H
+L : start upper end lower : h
+#+end_src
 
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '[[:alpha:]]$'
-    hello : alphabetical stuff : 5g
-    l : start lower end upper : H
-    L : start upper end lower : h
-    #+end_src
 
-    - ='[[:alpha:]]$'= : 5*g*, *H*, *h*
-
-    To match an alphabetic character anywhere in the line
+  -  To match an alphabetic character anywhere in the line
 
     - Try in a terminal
-
-    #+begin_src sh
-    cat chartypes.txt | grep '[[:alpha:]]'
+      #+begin_src bash
+cat chartypes.txt | grep '[[:alpha:]]'
     #+end_src
 
   - =[[:alnum:]]= matches alpha numeric characters.
 
-    To match an alpha numeric character at the beginning of the line
+  -  To match an alpha numeric character at the beginning of the line
 
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '^[[:alnum:]]'
-    hello : alphabetical stuff : 5g
-    l : start lower end upper : H
-    L : start upper end lower : h
-    5g : alpha numeric stuff : 42
-    42 : solution to everything :
-    #+end_src
+        #+begin_src bash
+~$ cat chartypes.txt | grep '^[[:alnum:]]'
+hello : alphabetical stuff : 5g
+l : start lower end upper : H
+L : start upper end lower : h
+5g : alpha numeric stuff : 42
+42 : solution to everything :
+ #+end_src
 
-    - ='^[[:alnum:]]'= : *h*ello, *l*, *L*, *5*g, *4*2
 
-    To match an alpha numeric character at the end of the line
+   - To match an alpha numeric character at the end of the line
 
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '[[:alnum:]]$'
-    hello : alphabetical stuff : 5g
-    l : start lower end upper : H
-    L : start upper end lower : h
-    5g : alpha numeric stuff : 42
-    #+end_src
+    #+begin_src bash
+~$ cat chartypes.txt | grep '[[:alnum:]]$'
+hello : alphabetical stuff : 5g
+l : start lower end upper : H
+L : start upper end lower : h
+5g : alpha numeric stuff : 42
+#+end_src
 
-    - ='[[:alnum:]]$'= : 5*g*, *H*, *h*, 4*2*
 
-    To match an alpha numeric character anywhere in the line
+  - To match an alpha numeric character anywhere in the line
 
     - Try in a terminal
 
-    #+begin_src sh
-    cat chartypes.txt | grep '[[:alnum:]]'
+        #+begin_src sh
+cat chartypes.txt | grep '[[:alnum:]]'
     #+end_src
 
-  - =[[:digit:]]= matches only numbers or digits
+    - =[[:digit:]]= matches only numbers or digits
 
-    To match a digit at the beginning of the line
+  - To match a digit at the beginning of the line
 
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '^[[:digit:]]'
-    5g : alpha numeric stuff : 42
-    42 : solution to everything : 
-    #+end_src
+      #+begin_src bash
+~$ cat chartypes.txt | grep '^[[:digit:]]'
+5g : alpha numeric stuff : 42
+42 : solution to everything :
+#+end_src
 
-    - ='^[[:digit:]]'= : *5*g, *4*2
+  -  To match a digit at the end of the line
 
-    To match a digit at the end of the line
+      #+begin_src bash
+~$ cat chartypes.txt | grep '[[:digit:]]$'
+5g : alpha numeric stuff : 42
+#+end_src
 
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '[[:digit:]]$' 
-    5g : alpha numeric stuff : 42
-    #+end_src
 
-    - ='[[:digit:]]$'= : 4*2*
+  - To match a digit anywhere in the line
 
-    To match a digit anywhere in the line
+      - Try in a terminal
 
-    - Try in a terminal
+        #+begin_src sh
+cat chartypes.txt | grep '[[:digit:]]'
+#+end_src
 
-    #+begin_src sh
-    cat chartypes.txt | grep '[[:digit:]]' 
-    #+end_src
+    - =[[:cntrl:]]= matches control characters.
 
-  - =[[:cntrl:]]= matches control characters.
+-  To match a control character
 
-    To match a control character
+      #+begin_src bash
+  ~$ cat chartypes.txt | grep '[[:cntrl:]]'
+  42 : solution to everything :
+  : start with control C and end with dot : .
+  : start with blank end with control char :
+  #+end_src
+   - The first line contains tab character at the end.
 
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '[[:cntrl:]]'
-    42 : solution to everything :   
-     : start with control C and end with dot : .
-      : start with blank end with control char :  
-    #+end_src
+- To output lines which do not match any control characters.
+        - =-v= option negates the selection.
+        - Try in terminal
 
-    - The first line contains tab character at the end.
-
-    To output lines which do not match any control characters.
-
-    - =-v= option negates the selection.
-    - Try in terminal
-
-    #+begin_src sh
-    cat chartypes.txt | grep -v '[[:cntrl:]]' 
+            #+begin_src sh
+cat chartypes.txt | grep -v '[[:cntrl:]]'
     #+end_src
 
   - =[[:punct:]]= matches punctuation characters.
 
-  - Punctuation Characters : =`~\!@#$%^&*_-+=[]{}();:,.<>/?""''=
+    - Punctuation Characters : =~\!@#$%^&*_-+= =[]{}();:,.<>/?""''=
 
-  To match a punctuation character at the beginning of the line
+    - To match a punctuation character at the beginning of the line
 
-  #+begin_src terminal
-  ~$ cat chartypes.txt | grep '^[[:punct:]]'
-  , : start with comma end with equals : =
-  #+end_src
+    #+begin_src bash
+~$ cat chartypes.txt | grep '^[[:punct:]]'
+, : start with comma end with equals : =
+#+end_src
 
-  Try the questions below.
+    - Try the questions below.
 
     - Write a command to match a punctuation character at the end of the
       line.
     - Write a command to match a punctuation character anywhere in the
       line.
 
-  - =[[:lower:]]= matches lower case characters
+- =[[:lower:]]= matches lower case characters
 
-    To match a lower case character at the beginning of the line
+    - To match a lower case character at the beginning of the line
 
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '^[[:lower:]]'
-    hello : alphabetical stuff : 5g
-    l : start lower end upper : H
+    #+begin_src bash
+~$ cat chartypes.txt | grep '^[[:lower:]]'
+hello : alphabetical stuff : 5g
+l : start lower end upper : H
     #+end_src
 
-    - ='^[[:lower:]]'= : *h*ello, *l*
 
-    Try the questions below.
+    - Try the questions below.
 
     - Write a command to match a lower case character at the end of the
       line.
     - Write a command to match a lower case character anywhere in the
       line.
 
-  - =[[:upper:]]= matches upper case characters
+- =[[:upper:]]= matches upper case characters
 
-    To match an upper case character at the beginning of the line
+   - To match an upper case character at the beginning of the line
 
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '^[[:upper:]]'
-    L : start upper end lower : h
-    #+end_src
+    #+begin_src bash
+~$ cat chartypes.txt | grep '^[[:upper:]]'
+L : start upper end lower : h
+#+end_src
 
-    - ='^[[:upper:]]'= : *L*
-
-    Try the questions below.
+    - Try the questions below.
 
     - Write a command to match an upper case character at the end of the
       line.
     - Write a command to match an upper case character anywhere in the
       line.
 
-  - =[[:print:]]= matches printable characters
+- =[[:print:]]= matches printable characters
 
     - control characters are not printable.
 
-    To match a printable character at the end of the line
+    - To match a printable character at the end of the line
 
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '[[:print:]]$'
-    hello : alphabetical stuff : 5g
-    l : start lower end upper : H
-    L : start upper end lower : h
-    5g : alpha numeric stuff : 42
-     : start with control C and end with dot : .
-    , : start with comma end with equals : =
-    #+end_src
+    #+begin_src bash
+~$ cat chartypes.txt | grep '[[:print:]]$'
+hello : alphabetical stuff : 5g
+l : start lower end upper : H
+L : start upper end lower : h
+5g : alpha numeric stuff : 42
+: start with control C and end with dot : .
+, : start with comma end with equals : =
+#+end_src
 
-    - ='[[:print:]]$'= : 5*g*, *H*, *h*, 4*2*, *.*, *=*
 
-    Try the questions below.
+    - Try the questions below.
 
     - Write a command to match a printable character at the beginning of
       the line.
     - Write a command to match a printable character anywhere in the
       line.
 
-  - =[[:blank:]]= matches blank characters (space / tab)
+- =[[:blank:]]= matches blank characters (space/tab)
 
     To match a blank character at the end of the line
 
-    #+begin_src terminal
+    #+begin_src bash
     ~$ cat chartypes.txt | grep '[[:blank:]]$'
     42 : solution to everything :   
     #+end_src
 
-    - The line has tab at the end.
+  - The line has tab at the end.
 
-    Try the questions below.
+  Try the questions below.
 
-    - Write a command to match a blank character at the beginning of the
-      line.
-    - Write a command to match a blank character anywhere in the line.
+  - Write a command to match a blank character at the beginning of the
+    line.
+  - Write a command to match a blank character anywhere in the line.
 
-  - =[[:space:]]= matches space
+- =[[:space:]]= matches space
 
-    To match a space at the beginning of the line
+  - To match a space at the beginning of the line
 
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '^[[:space:]]'
-      : start with blank end with control char :
-    #+end_src
+      #+begin_src bash
+~$ cat chartypes.txt | grep '^[[:space:]]'
+: start with blank end with control char :
+      #+end_src
 
-    Try the questions below.
-
-    - Write a command to match a space at the end of the line.
-    - Write a command to match a space anywhere in the line.
-
-  - =[[:graph:]]= matches non-space characters.
-
-    To match a non-space characters at the beginning of the line
-
-    #+begin_src terminal
-    ~$ cat chartypes.txt | grep '^[[:graph:]]'
-    hello : alphabetical stuff : 5g
-    l : start lower end upper : H
-    L : start upper end lower : h
-    5g : alpha numeric stuff : 42
-    42 : solution to everything :   
-    , : start with comma end with equals : =
-    #+end_src
-
-    - ='^[[:graph:]]'= : *h*ello, *l*, *L*, *5*g, *4*2, *,*
-
-    Try the questions below.
+    - Try the questions below.
 
     - Write a command to match a space at the end of the line.
     - Write a command to match a space anywhere in the line.
 
-  - =^$= matches empty lines. The two anchors together match empty
-    lines. Use when you want the empty lines in the input to be skipped
-    in the output
+    - =[[:graph:]]= matches non-space characters.
 
-    Try in a terminal
+      To match a non-space characters at the beginning of the line
 
-    #+begin_src sh
-    cat chartypes.txt | grep '^$'
-    #+end_src
+      #+begin_src terminal
+~$ cat chartypes.txt | grep '^[[:graph:]]'
+hello : alphabetical stuff : 5g
+l : start lower end upper : H
+L : start upper end lower : h
+5g : alpha numeric stuff : 42
+42 : solution to everything :
+, : start with comma end with equals : =
+#+end_src
 
-    #+begin_src sh
-    cat chartypes.txt | grep -v '^$'
-    #+end_src
+      - Try the questions below.
+
+      - Write a command to match a space at the end of the line.
+      - Write a command to match a space anywhere in the line.
+
+      - =^$= matches empty lines. The two anchors together match empty
+      lines. Use when you want the empty lines in the input to be skipped
+      in the output
+
+     - Try in a terminal
+
+      #+begin_src sh
+cat chartypes.txt | grep '^$'
+      #+end_src
+
+      #+begin_src sh
+cat chartypes.txt | grep -v '^$'
+      #+end_src
 
 **** More Examples on =grep= Character Sets
 :PROPERTIES:
@@ -835,19 +784,19 @@ cat names.txt | grep '\(a.\).*\1'
 
   - To match the line which contains aadhaar number.
 
-    #+begin_src terminal
-    ~$ egrep '[[:digit:]]{12}' patterns.txt
-    Aadhar card number contains 12 digits and can look like 123456781234 for example.
+    #+begin_src sh
+~$ egrep '[[:digit:]]{12}' patterns.txt
+Aadhar card number contains 12 digits and can look like 123456781234 for example.
     #+end_src
 
-    - ='[[:digit:]]{12}'= : *123456781234*
+  - ='[[:digit:]]{12}'= : *123456781234*
 
-  - To match the line which contains pincode.
+- To match the line which contains pincode.
 
     - Matching only six digits is not feasible, we will consider word
       boundary also.
 
-    #+begin_src terminal
+    #+begin_src sh
     ~$ egrep '\b[[:digit:]]{6}\b' patterns.txt
     Pincodes of cities of Bharat contain 6 digits and that of IITM is 600036.
     #+end_src
@@ -860,7 +809,7 @@ cat names.txt | grep '\(a.\).*\1'
     - Roll number has a specific pattern, only matching alphanumeric
       characters will not help.
 
-    #+begin_src terminal
+    #+begin_src sh
     ~$ egrep '\b[[:alpha:]]{2}[[:digit:]]{2}[[:alpha:]][[:digit:]]{3}\b' patterns.txt
     Roll numbers in IIT for regular students are of the pattern MM22B001 where the first two letters correspond to the Department code, 2 digits for the year of joining, then the program code character and then a 3 digit number for their roll number within the class
     #+end_src
@@ -883,152 +832,4 @@ cat names.txt | grep '\(a.\).*\1'
     #+begin_src terminal
     ~$ egrep "\b[[:alnum:]]+\.[[:alnum:]]+" patterns.txt
     URLs can be given these days without the protocol like https://www.iitm.ac.in/ They can be given as just github.com for example.
-    #+end_src
-
-    - ="\b[[:alnum:]]+\.[[:alnum:]]+"= : *www.iitm*, *ac.in*,
-      *github.com*
-
-** =cut= Command
-:PROPERTIES:
-:CUSTOM_ID: cut-command
-:END:
-- We have seen =head= and =tail= command to select lines.
-- Cut command is used to select columns of lines.
-- We will consider [[/Week-4/Files/fields.txt][fields.txt]] file for
-  demonstration.
-- Options :
-  - =-b= : to select bytes.
-  - =-c= : to select characters
-  - =-d= : to specify delimeter, TAB by default
-  - =-f= : to select fields
-- arguments to =-b=, =-c=, =-f=, M and N are numbers
-  - =M= - select only M'th character
-
-  - =M-N= - select M to N characters.
-
-  - =M-= - select characters M onwards
-
-  - =-N= - select characters upto N
-
-  - =cut -c= to select characters
-
-    To select first 4 characters (1-4)
-
-    #+begin_src terminal
-    ~$ cut -c 1-4 fields.txt
-    1234
-    2345
-    3456
-    #+end_src
-
-    Try in a terminal
-
-    #+begin_src sh
-    cut -c 5-8 fields.txt
-    #+end_src
-
-    - Selects characters 5 to 8
-
-    To select characters up to 4 (-4)
-
-    #+begin_src terminal
-    ~$ cut -c -4 fields.txt
-    1234
-    2345
-    3456
-    #+end_src
-
-    To select characters 8 onwards (8-)
-
-    #+begin_src terminal
-    ~$ cut -c 8- fields.txt
-    llo world,line-1
-    welcome cmdline,line-2
-    rse text,line-3
-    #+end_src
-
-  - =cut -d"D" -f= to cut and select characters by fields separated by D
-    (delimeter)
-
-    To select first field using D=” ” (space)
-
-    #+begin_src terminal
-    ~$ cut -d " " -f 1 fields.txt
-    1234;hello
-    234567;welcome
-    3456;parse
-    #+end_src
-
-    Try in a terminal
-
-    #+begin_src sh
-    ~$ cut -d " " -f 2
-    #+end_src
-
-    - Selects second half of the field separated by ” ”
-
-    To select first field using D=";"
-
-    #+begin_src terminal
-    ~$ cut -d ";" -f 1 fields.txt
-    1234
-    234567
-    3456
-    #+end_src
-
-    Try in a terminal
-
-    #+begin_src sh
-    cut -d ";" -f 2 fields.txt
-    #+end_src
-
-    - Selects second half of the field separated by ";".
-
-    To select second field using D=","
-
-    #+begin_src terminal
-    ~$ cut -d "," -f 2 fields.txt
-    line-1
-    line-2
-    line-3
-    #+end_src
-
-    Try in a terminal
-
-    #+begin_src sh
-    cut -d "," -f 1 fields.txt
-    #+end_src
-
-    - Selects first half of the field separated by ",".
-
-  - Combining =cut= command twice
-
-    To select only the text part between fields separated by ";" and ","
-
-    - We use piping for this.
-
-    #+begin_src terminal
-    ~$ cat fields.txt | cut -d ";" -f 2 | cut -d ","  -f 1 
-    hello world
-    welcome cmdline
-    parse text
-    #+end_src
-
-    It is possible to match the similar output using =grep=
-
-    - Try in a terminal
-
-    #+begin_src sh
-    cat fields.txt | grep ";.*,"
-    #+end_src
-
-    - Matches patterns like *;hello world,*
-    - This pattern can be extracted using [[][sed]] command
-
-  - Combining =cut=, =head= and =tail= commands We will pick /welcome
-    cmdline/ text.
-
-    #+begin_src terminal
-    ~$ cat fields.txt | cut -d ";" -f 2 | cut -d ","  -f 1 | head -n 2 | tail -n 1      
-    welcome cmdline
     #+end_src
