@@ -1,29 +1,11 @@
-### For Students:
-
-- **Create Tickets:** Utilize the ticket creation feature to draft comprehensive tickets, including detailed descriptions and pertinent attachments, fostering a nuanced understanding of the reported issues.
-
-- **Dashboard Access:** Navigate through an intuitive dashboard interface, meticulously designed to provide holistic visibility into the status and progression of submitted tickets, ensuring transparency and accountability.
-
-- **Ticket Modification:** Employ the ticket editing functionality to iteratively refine submissions, incorporating additional information, tagging relevant stakeholders, and providing contextual updates to facilitate collaborative problem-solving.
-
-- **Ticket Deletion:** Exercise discretion in selectively removing tickets, strategically managing the clutter and ensuring an uncluttered interface conducive to seamless navigation and focused engagement.
-
-- **Issue Resolution Tracking:** Employ the "Mark as Solved" feature judiciously, signaling the culmination of issue resolution efforts and fostering a culture of acknowledgment and closure within the user community.
-
-- **Discourse Integration Options:** Exercise agency in selecting the Discourse integration option, harnessing the power of community-driven discourse to explore alternative perspectives and enrich collaborative problem-solving endeavors.
-
-- **User Tagging Functionality:** Leverage the user tagging functionality to orchestrate targeted engagements, summoning relevant stakeholders and catalyzing synergistic collaborations to expedite issue resolution timelines.
-
-- **Inter-User Discourse Commentary:** Engage in constructive discourse by actively participating in commentary threads associated with tickets raised by peers, fostering a vibrant ecosystem of knowledge-sharing and mutual support.
-
-- **Real-Time Notification Mechanism:** Remain apprised of pertinent developments through a sophisticated real-time notification mechanism, ensuring prompt updates on ticket responses and resolutions, and facilitating informed decision-making.
-
-### For Support Staff:
-
-- **Ticket Management Authority:** Wield administrative privileges to efficiently manage tickets, including the discretion to delete redundant tickets, streamline the support pipeline, and optimize resource allocation.
-
-- **User Interaction Facilitation:** Enhance user interaction dynamics through adept user tagging capabilities, enabling seamless communication and collaboration among support staff and users to navigate complex issue landscapes.
-
-- **Elaborative Ticket Commentary:** Provide comprehensive commentary on tickets to augment understanding, offering nuanced insights, progress updates, and contextual elucidations to expedite issue resolution trajectories.
-
-- **Resolution Acknowledgment:** Convey conclusive resolution outcomes by meticulously marking tickets as solved, signifying the culmination of support efforts and fostering user confidence in the suppor
+| **For Students**                                       | **For Support Staff**                                  | **For Admin**                                          |
+|--------------------------------------------------------|--------------------------------------------------------|--------------------------------------------------------|
+| **Create Tickets:** Initiate new tickets with comprehensive descriptions, including attachments to provide context and enhance understanding. | **Ticket Management Authority:** Exert administrative prowess to efficiently manage tickets, exercising discretion in the deletion of redundant tickets to streamline the support pipeline and optimize resource allocation. | **Parity with Support Staff:** Exercise operational parity with support staff, wielding identical ticket management functionalities to orchestrate cohesive support operations and ensure uniform service delivery standards. |
+| **Dashboard Access:** Utilize a multifaceted dashboard interface to peruse submitted tickets, meticulously organized to facilitate streamlined navigation and efficient management of ticket statuses. | **User Interaction Facilitation:** Enhance user interaction dynamics through adept user tagging capabilities, enabling seamless communication and collaboration among support staff and users to navigate complex issue landscapes with finesse. | **Comprehensive User Management:** Navigate a comprehensive suite of user management tools, facilitating granular control over user accounts, including creation, modification, and deletion functionalities to uphold system integrity and ensure adherence to organizational protocols. |
+| **Ticket Modification:** Employ the versatile ticket editing feature to dynamically update submissions, incorporating additional information, tagging pertinent users, and furnishing contextual elaborations to enrich collaborative problem-solving endeavors. | **Elaborative Ticket Commentary:** Provide comprehensive commentary on tickets to augment understanding, offering nuanced insights, progress updates, and contextual elucidations to expedite issue resolution trajectories and enhance user satisfaction. | **Strategic User Account Deletion:** Exercise discernment in strategic user account deletions, meticulously adhering to stringent privacy regulations and organizational protocols to uphold data integrity and user privacy standards, thereby instilling user confidence in the integrity of the user management framework. |
+| **Ticket Deletion:** Exercise discernment in selectively removing tickets, strategically managing the clutter within the system's interface to optimize user experience and promote focused engagement with unresolved issues. | **Resolution Acknowledgment:** Convey conclusive resolution outcomes by meticulously marking tickets as solved, serving as a tangible testament to the culmination of support efforts and fostering user confidence in the robustness of the support ecosystem. | |
+| **Mark as Solved:** Employ the "Mark as Solved" functionality judiciously, serving as a testament to the successful resolution of reported issues, fostering a culture of acknowledgment and closure within the user community. | **Expedited Notification Channels:** Optimize responsiveness by configuring expedited notification channels, ensuring timely alerts on Google Chat upon user tagging, thereby expediting issue triage and resolution processes with efficiency and efficacy. | |
+| **Option to Raise on Discourse:** Choose to discuss tickets on Discourse for community-oriented discussions. | **Discourse Engagement Paradigm:** Embrace a holistic engagement paradigm by actively participating in Discourse discussions, leveraging the platform's community-centric features to enrich collaborative discourse and drive impactful resolutions. | |
+| **Tagging Users:** Harness the power of user tagging functionalities to orchestrate targeted engagements, summoning relevant stakeholders and catalyzing synergistic collaborations to expedite issue resolution timelines. | | |
+| **Commenting on Others' Tickets:** Engage with peers by commenting on their tickets. | | |
+| **Notification System:** Remain abreast of pertinent developments through a sophisticated real-time notification mechanism, ensuring prompt updates on ticket responses and resolutions to facilitate informed decision-making. | | |
