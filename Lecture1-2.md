@@ -14,9 +14,9 @@ Ref: https://standards.ieee.org/standard/1003_1-2001.html
 ## Why learn regex?
 * Process input from user.
 * Perform string oprations based on pattern.
-* Languages: Java, Perl, Python, Ruby, ...
+* Languages: Java, Perl, Python, Ruby
 * Tools: grep, sed, awk
-* Applications: MySQL, PostgreeSQL, ...
+* Applications: MySQL, PostgreeSQL
 * We will focus on grep here.
 
 ### Special Characters (BRE and ERE)
